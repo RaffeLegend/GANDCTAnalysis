@@ -3,6 +3,7 @@ import numpy as np
 
 def _welford_update(existing_aggregate, new_value):
     (count, mean, M2) = existing_aggregate
+    mean = mean.astype(np.float64)
     if count is None:
         count, mean, M2 = 0, np.zeros_like(new_value), np.zeros_like(new_value)
 

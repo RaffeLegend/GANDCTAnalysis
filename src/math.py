@@ -6,6 +6,7 @@ def _welford_update(existing_aggregate, new_value):
     if count is None:
         count, mean, M2 = 0, np.zeros_like(new_value), np.zeros_like(new_value)
     mean = mean.astype(np.float64)
+    M2 = M2.astype(np.float64)
 
     count += 1
     delta = new_value - mean

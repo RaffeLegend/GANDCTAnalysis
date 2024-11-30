@@ -59,7 +59,7 @@ def calculate_average_frequency(images, absolute_value, mean, std):
         image_array = transform(image_array)
         image_array = scale_by_absolute(image_array, absolute_value)
         image_array = normalize(image_array, mean, std)
-
+        image_array = np.abs(image_array)
         resized_magnitude_spectrum = cv2.resize(image_array, (512, 512))
         
         if frequency_sum is None:

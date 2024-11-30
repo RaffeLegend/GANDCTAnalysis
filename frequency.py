@@ -37,13 +37,17 @@ def calculate_mean_std(images):
     std = np.sqrt(var)
     return mean, std
 
-def load_images_from_folder(image_folder):
+def load_images_from_folder(image_folder, max_images=200):
     images = []
+    count = 0
     for filename in os.listdir(image_folder):
         if filename.endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tiff')):
+            if max_images is not None and count >= max_images:
+                break
             image_path = os.path.join(image_folder, filename)
             image = load_image(image_path, grayscale=True)
             images.append(np.array(image))
+            count += 1
     return images
 
 def calculate_average_frequency(images, absolute_value, mean, std):

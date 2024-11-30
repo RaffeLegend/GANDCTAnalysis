@@ -12,6 +12,7 @@ def dct2(array):
 def fft2d(array):
     array = fftpack.fft2(array)
     array = fftpack.fftshift(array)
+    array = 20 * np.log(np.abs(array) + 1)
     return array
 
 

@@ -52,6 +52,7 @@ def load_images_from_folder(image_folder, max_images=200):
 
 def calculate_average_frequency(images, absolute_value, mean, std):
     frequencies = []
+    frequency_sum = None
     count = 0
     progress_bar = tqdm(total=len(images), desc="calculating")
     for image_array in images:
@@ -96,7 +97,7 @@ def save_average_frequency_image(average_frequency, output_path):
 
 
 if __name__ == "__main__":
-    image_folder = '/path/to/your/image/folder'
+    image_folder = '/mnt/data2/users/hilight/datasets/FakeSocialMedia/Images/absolute_reality/coco_0000'
     output_folder = './'
     images = load_images_from_folder(image_folder)
     absolute_value = calculate_absolute_value(images)

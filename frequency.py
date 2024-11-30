@@ -10,6 +10,8 @@ from scipy import fftpack
 import matplotlib.pyplot as plt
 import cv2
 
+from tqdm import tqdm
+
 def transform(image):
     # image = _dct2_wrap(image)
     image = fft2d(image)
@@ -18,12 +20,14 @@ def transform(image):
 def calculate_absolute_value(images):
     first = next(images)
     current_max = np.absolute(first)
+    progress_bar = tqdm(total=len(images), desc="absolute")
     for data in images:
+        progress_bar.update(1)
         max_values = np.absolute(data)
         mask = current_max > max_values
         current_max *= mask
         current_max += max_values * ~mask
-
+    progress_bar.close()
     return current_max
 
 def scale_by_absolute(image, current_max):
@@ -46,7 +50,9 @@ def load_images_from_folder(image_folder):
 def calculate_average_frequency(images, absolute_value, mean, std):
     frequencies = []
     count = 0
+    progress_bar = tqdm(total=len(images), desc="calculating")
     for image_array in images:
+        progress_bar.update(1)
         image_array = transform(image_array)
         image_array = scale_by_absolute(image_array, absolute_value)
         image_array = normalize(image_array, mean, std)
@@ -58,7 +64,8 @@ def calculate_average_frequency(images, absolute_value, mean, std):
         
         frequency_sum += resized_magnitude_spectrum
         count += 1
-
+    
+    progress_bar.close()
     average_frequency = frequency_sum / count
     return average_frequency
 

@@ -1,7 +1,6 @@
 import os
 import numpy as np
 from PIL import Image
-from prepare_dataset import _dct2_wrap, _fft2d_wrap
 
 from src.image_np import dct2, load_image, normalize, scale_image, fft2d
 from src.math import log_scale, welford
@@ -18,7 +17,7 @@ def transform(image):
     return image
 
 def calculate_absolute_value(images):
-    first = next(images)
+    first = images[0]
     current_max = np.absolute(first)
     progress_bar = tqdm(total=len(images), desc="absolute")
     for data in images:
